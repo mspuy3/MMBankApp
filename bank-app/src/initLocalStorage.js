@@ -31,7 +31,7 @@ var testAccounts = [
   firstName: "Jason",
   middleName: "Cross",
   lastName: "Bourne",
-  balanceAmount: 1000.00,
+  balanceAmount: 2000.00,
   transactionHistory: [
      {
         transactionID: "",
@@ -53,7 +53,7 @@ var testAccounts = [
     firstName: "Jack",
     middleName: "Twofour",
     lastName: "Bauer",
-    balanceAmount: 1000.00,
+    balanceAmount: 3000.00,
     transactionHistory: [
        {
           transactionID: "",
