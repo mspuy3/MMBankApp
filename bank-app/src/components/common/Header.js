@@ -4,9 +4,7 @@ import { NavLink } from "react-router-dom";
 function Header() {
   return (
     <nav>
-      <NavLink to='/' exact>
-        Dashboard{" "}
-      </NavLink>
+      <NavLink to='/'>Dashboard </NavLink>
       {"|"}
       <NavLink to='/accounts'>Accounts</NavLink>
     </nav>
