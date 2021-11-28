@@ -18,12 +18,26 @@ export function getAccounts() {
 export function getAccountById(id) {
   let accounts = JSON.parse(localStorage.getItem("accounts"));
 
-  return accounts.find((account) => account.id === id);
+  return accounts.find((account) => account.id === parseInt(id, 10));
+}
+
+/* 
+  Summary: 
+   1. retrieves accounts array in local storage
+   2. returns an account which has the same account number as the passed id 
+  Params:
+    accountNo - Account number of the account that will be retrieved
+*/
+export function getAccountByAccountNo(accountNo) {
+  let accounts = JSON.parse(localStorage.getItem("accounts"));
+
+  return accounts.find((account) => account.accountNumber === accountNo);
 }
 
 /* 
   Summary: 
     1. retrieves accounts array in local storage
+    2. sets account id by incrementing current accounts array length by one
     2. pushes passed account into the the accounts array
     3. saves new accounts array into the local storage overriding the previous value
   Params:
@@ -32,8 +46,13 @@ export function getAccountById(id) {
 export function saveAccount(account) {
   let accounts = JSON.parse(localStorage.getItem("accounts"));
 
+  const id = accounts.length + 1;
+  account.id = id;
+
   accounts.push(account);
   localStorage.setItem("accounts", JSON.stringify(accounts));
+
+  return account.id;
 }
 
 /* 
@@ -47,13 +66,11 @@ export function saveAccount(account) {
 export function updateAccount(account) {
   let accounts = JSON.parse(localStorage.getItem("accounts"));
 
-  accounts.forEach((_account) => {
-    if (_account.id === account.id) {
-      _account.name = account.name;
-    }
-  });
+  const _accounts = accounts.map((_account) =>
+    _account.id === account.id ? account : _account
+  );
 
-  localStorage.setItem("accounts", JSON.stringify(accounts));
+  localStorage.setItem("accounts", JSON.stringify(_accounts));
 }
 
 /* 
