@@ -1,5 +1,8 @@
 import React from "react";
+import NumberInput from "../common/NumberInput";
 import TextInput from "../common/TextInput";
+
+const CREATE_ACTION = "Create";
 
 function AccountForm(props) {
   return (
@@ -10,6 +13,7 @@ function AccountForm(props) {
         name='accountNumber'
         value={props.account.accountNumber || ""}
         onChange={props.handleChange}
+        error={props.errors.accountNumber}
       />
 
       <TextInput
@@ -18,6 +22,7 @@ function AccountForm(props) {
         name='accountName'
         value={props.account.accountName || ""}
         onChange={props.handleChange}
+        error={props.errors.accountName}
       />
 
       <hr />
@@ -29,6 +34,7 @@ function AccountForm(props) {
         name='firstName'
         value={props.account.accountHolder.firstName || ""}
         onChange={props.handleAccountHolderChange}
+        error={props.errors.firstName}
       />
 
       <TextInput
@@ -37,6 +43,7 @@ function AccountForm(props) {
         name='middleName'
         value={props.account.accountHolder.middleName || ""}
         onChange={props.handleAccountHolderChange}
+        error={props.errors.middleName}
       />
 
       <TextInput
@@ -45,7 +52,24 @@ function AccountForm(props) {
         name='lastName'
         value={props.account.accountHolder.lastName || ""}
         onChange={props.handleAccountHolderChange}
+        error={props.errors.lastName}
       />
+
+      <hr />
+      {props.action === CREATE_ACTION ? (
+        <NumberInput
+          id='initialDeposit'
+          label='Initial Deposit'
+          name='balanceAmount'
+          min={props.minDeposit}
+          max='99999'
+          value={props.account.balanceAmount || ""}
+          onChange={props.handleChange}
+          error={props.errors.balanceAmount}
+        />
+      ) : (
+        ""
+      )}
 
       <input type='submit' value='Save' />
     </form>

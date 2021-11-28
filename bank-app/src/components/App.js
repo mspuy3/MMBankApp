@@ -1,6 +1,8 @@
+import { Route, Routes } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
+
 import DashboardPage from "./Dashboard/DashboardPage";
 import AccountsPage from "./Accounts/AccountsPage";
-import { Route, Routes } from "react-router-dom";
 import Layout from "./Layout";
 import ManageAccountPage from "./Accounts/ManageAccountPage";
 
@@ -21,6 +23,7 @@ function App() {
           />
         </Route>
       </Routes>
+      <ToastContainer />
     </div>
   );
 }

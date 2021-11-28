@@ -1,13 +1,15 @@
 import React from "react";
 
-function TextInput(props) {
+function NumberInput(props) {
   return (
     <div>
       <label htmlFor={props.id}>{props.label}</label>
       <input
         id={props.id}
-        type='text'
+        type='number'
         name={props.name}
+        min={props.min}
+        max={props.max}
         value={props.value}
         onChange={props.onChange}
       />
@@ -16,4 +18,4 @@ function TextInput(props) {
   );
 }
 
-export default TextInput;
+export default NumberInput;

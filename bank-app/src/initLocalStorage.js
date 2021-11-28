@@ -14,21 +14,7 @@ var testAccounts = [
       lastName: "Cross",
     },
     balanceAmount: 1000.0,
-    transactionHistory: [
-      {
-        transactionID: "1",
-        transactionType: "DEPOSIT",
-        transactionAmount: 1000.0,
-        transactionDate: "",
-        transactionNotes: "",
-        transactionPartner: {
-          accountNumber: null,
-          firstName: null,
-          middleName: null,
-          lastName: null,
-        },
-      },
-    ],
+    transactionHistory: [],
   },
   {
     id: 2,
@@ -40,21 +26,7 @@ var testAccounts = [
       lastName: "Bourne",
     },
     balanceAmount: 1000.0,
-    transactionHistory: [
-      {
-        transactionID: "",
-        transactionType: "DEPOSIT/WITHDRAW/SEND/RECEIVE",
-        transactionAmount: 0.0,
-        transactionDate: "",
-        transactionNotes: "",
-        transactionPartner: {
-          accountNumber: "00003",
-          firstName: "Jack",
-          middleName: "Twofour",
-          lastName: "Bauer",
-        },
-      },
-    ],
+    transactionHistory: [],
   },
   {
     id: 3,
@@ -66,26 +38,23 @@ var testAccounts = [
       lastName: "Bauer",
     },
     balanceAmount: 1000.0,
-    transactionHistory: [
-      {
-        transactionID: "",
-        transactionType: "DEPOSIT/WITHDRAW/SEND/RECEIVE",
-        transactionAmount: 0.0,
-        transactionDate: "",
-        transactionNotes: "",
-        transactionPartner: {
-          accountNumber: "00003",
-          firstName: "Jack",
-          middleName: "Twofour",
-          lastName: "Bauer",
-        },
-      },
-    ],
+    transactionHistory: [],
   },
 ];
 
-export function accounts() {
+export default function initLocalStorage() {
+  initAccounts();
+  initTransactions();
+}
+
+function initAccounts() {
   if (localStorage.getItem("accounts") === null) {
     localStorage.setItem("accounts", JSON.stringify(testAccounts));
+  }
+}
+
+function initTransactions() {
+  if (localStorage.getItem("transactions") === null) {
+    localStorage.setItem("transactions", JSON.stringify([]));
   }
 }

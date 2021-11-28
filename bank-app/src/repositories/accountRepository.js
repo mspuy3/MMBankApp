@@ -23,6 +23,19 @@ export function getAccountById(id) {
 
 /* 
   Summary: 
+   1. retrieves accounts array in local storage
+   2. returns an account which has the same account number as the passed id 
+  Params:
+    accountNo - Account number of the account that will be retrieved
+*/
+export function getAccountByAccountNo(accountNo) {
+  let accounts = JSON.parse(localStorage.getItem("accounts"));
+
+  return accounts.find((account) => account.accountNumber === accountNo);
+}
+
+/* 
+  Summary: 
     1. retrieves accounts array in local storage
     2. sets account id by incrementing current accounts array length by one
     2. pushes passed account into the the accounts array
@@ -38,6 +51,8 @@ export function saveAccount(account) {
 
   accounts.push(account);
   localStorage.setItem("accounts", JSON.stringify(accounts));
+
+  return account.id;
 }
 
 /* 
