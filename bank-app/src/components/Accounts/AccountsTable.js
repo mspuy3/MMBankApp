@@ -1,6 +1,6 @@
 import React from 'react';
 import { useTable, usePagination, useSortBy } from "react-table";
-import { getAccounts } from '../../../repositories/accountRepository';
+import { getAccounts } from '../../repositories/accountRepository'
 
 //Sets the header of the table. accessor matches the key of the object elements from the source ( user objects in the accounts array in the localStorage) //  
 const columns = [

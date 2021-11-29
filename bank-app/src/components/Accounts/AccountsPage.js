@@ -1,5 +1,5 @@
 import React from "react";
-import AccountsTable from "./ListOfAllAccounts/AccountsTable";
+import AccountsTable from "./AccountsTable";
 
 
 function AccountsPage() {
