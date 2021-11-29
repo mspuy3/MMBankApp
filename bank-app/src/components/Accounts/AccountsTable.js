@@ -2,7 +2,10 @@ import React from 'react';
 import { useTable, usePagination, useSortBy, useGlobalFilter } from "react-table";
 import { getAccounts } from '../../repositories/accountRepository'
 
-//Sets the header of the table. accessor matches the key of the object elements from the source ( user objects in the accounts array in the localStorage) //  
+//Sets the header of the table. accessor matches the key of the object elements from the source ( user objects in the accounts array in the localStorage) //
+
+let linkTemplate = '/accounts/manage-account/';
+
 const columns = [
    {
       Header: "Account Number",
@@ -19,7 +22,7 @@ const columns = [
    {
       Header: "View Account",
       accessor: "id",
-      Cell: e => <a href={e.value}> View </a>
+      Cell: e => <a href={linkTemplate + e.value}> View </a>
    }
 ];
 
