@@ -9,16 +9,8 @@ const columns = [
       accessor: "accountNumber",
    },
    {
-      Header: "First Name",
-      accessor: "firstName",
-   },
-   {
-      Header: "Middle Name",
-      accessor: "middleName",
-   },
-   {
-      Header: "Last Name",
-      accessor: "lastName",
+      Header: "Account Name",
+      accessor: "accountName",
    },
    {
       Header: "Balance Amount",

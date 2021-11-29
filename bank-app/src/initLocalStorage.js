@@ -5,75 +5,56 @@
 
 var testAccounts = [
   {
+    id: 1,
     accountNumber: "00001",
-    firstName: "Alex",
-    middleName: "Bourne",
-    lastName: "Cross",
-    balanceAmount: 1000.00,
-    transactionHistory: [
-       {
-          transactionID: "1",
-          transactionType: "DEPOSIT",
-          transactionAmount: 1000.00,
-          transactionDate: "",
-          transactionNotes: "",
-          transactionPartner: {
-            accountNumber: null,
-            firstName: null,
-            middleName: null,
-            lastName: null,
-          },
-       }
-    ]
- },
- {
-  accountNumber: "00002",
-  firstName: "Jason",
-  middleName: "Cross",
-  lastName: "Bourne",
-  balanceAmount: 2000.00,
-  transactionHistory: [
-     {
-        transactionID: "",
-        transactionType: "DEPOSIT/WITHDRAW/SEND/RECEIVE",
-        transactionAmount: 0.00,
-        transactionDate: "",
-        transactionNotes: "",
-        transactionPartner: {
-          accountNumber: "00003",
-          firstName: "Jack",
-          middleName: "Twofour",
-          lastName: "Bauer",
-        },        
-     }
-    ]
+    accountName: "ALEX CROSS",
+    accountHolder: {
+      firstName: "Alex",
+      middleName: "Bourne",
+      lastName: "Cross",
+    },
+    balanceAmount: 1000.0,
+    transactionHistory: [],
   },
   {
-    accountNumber: "00003",
-    firstName: "Jack",
-    middleName: "Twofour",
-    lastName: "Bauer",
-    balanceAmount: 3000.00,
-    transactionHistory: [
-       {
-          transactionID: "",
-          transactionType: "DEPOSIT/WITHDRAW/SEND/RECEIVE",
-          transactionAmount: 0.00,
-          transactionDate: "",
-          transactionNotes: "",
-          transactionPartner: {
-            accountNumber: "00003",
-            firstName: "Jack",
-            middleName: "Twofour",
-            lastName: "Bauer",
-          },
-       }
-      ]
+    id: 2,
+    accountNumber: "00002",
+    accountName: "JASON BOURNE",
+    accountHolder: {
+      firstName: "Jason",
+      middleName: "Cross",
+      lastName: "Bourne",
+    },
+    balanceAmount: 1000.0,
+    transactionHistory: [],
   },
-]
+  {
+    id: 3,
+    accountNumber: "00003",
+    accountName: "JACK BAUER",
+    accountHolder: {
+      firstName: "Jack",
+      middleName: "Twofour",
+      lastName: "Bauer",
+    },
+    balanceAmount: 1000.0,
+    transactionHistory: [],
+  },
+];
 
-export function accounts() {
+export default function initLocalStorage() {
+  initAccounts();
+  initTransactions();
+}
+
+function initAccounts() {
   if (localStorage.getItem("accounts") === null) {
     localStorage.setItem("accounts", JSON.stringify(testAccounts));
+  }
+}
+
+function initTransactions() {
+  if (localStorage.getItem("transactions") === null) {
+    localStorage.setItem("transactions", JSON.stringify([]));
   }
 }
