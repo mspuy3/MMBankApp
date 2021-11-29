@@ -21,9 +21,9 @@ const columns = [
       accessor: "balanceAmount",
    },
    {
-      Header: "View Account",
+      Header: "View",
       accessor: "id",
-      Cell: e => <button> <a href={linkTemplate + e.value}> View </a> </button>
+      Cell: e => <button> <Link to={linkTemplate + e.value}> View </Link> </button>
    }
 ];
 
@@ -31,7 +31,7 @@ const columns = [
 const data = getAccounts();
 
 
-//
+//search function //
 const GlobalFilter = ({filter, setFilter}) => {
    return (
       <div>
@@ -82,7 +82,7 @@ const AccountsTable = () => {
 
    const { globalFilter } = state
 
-   // Render the UI for your table //
+   // Render the UI for the search bar, table, and pagination //
    return (
    <>
 
