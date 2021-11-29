@@ -1,5 +1,5 @@
 import React from 'react';
-import { useTable, usePagination, useSortBy } from "react-table";
+import { useTable, usePagination, useSortBy, useGlobalFilter } from "react-table";
 import { getAccounts } from '../../repositories/accountRepository'
 
 //Sets the header of the table. accessor matches the key of the object elements from the source ( user objects in the accounts array in the localStorage) //  
@@ -16,10 +16,29 @@ const columns = [
       Header: "Balance Amount",
       accessor: "balanceAmount",
    },
+   {
+      Header: "View Account",
+      accessor: "id",
+      Cell: e => <a href={e.value}> View </a>
+   }
 ];
 
 //retrieves the accounts value from the localStorage//
 const data = getAccounts();
+
+
+//
+const GlobalFilter = ({filter, setFilter}) => {
+   return (
+      <div>
+         Global Search: {' '}
+         <input
+            placeholder = 'Search by Number or Name' 
+            value={filter || ''}
+            onChange={e => setFilter(e.target.value)}  />
+      </div>
+   )
+}
 
 
 //generates the actual table//
@@ -43,19 +62,28 @@ const AccountsTable = () => {
       previousPage,
       setPageSize,
       state: { pageIndex, pageSize },
+      state,
+      setGlobalFilter,
    } = useTable (
       {
          columns,
          data,
          initialState: { pageIndex: 0 },
       },
+      useGlobalFilter,
       useSortBy,
-      usePagination
+      usePagination,
+      
    )
+
+   const { globalFilter } = state
 
    // Render the UI for your table //
    return (
    <>
+
+      <GlobalFilter filter={globalFilter} setFilter={setGlobalFilter} />
+
       <table {...getTableProps()}>
          <thead>
             {headerGroups.map(headerGroup => (
@@ -91,6 +119,7 @@ const AccountsTable = () => {
          </tbody>
 
       </table>
+
       {/* Pagination buttons below. {' '} adds the space between. Remove {' '} during styling */}
       <div className="pagination">
          <button onClick={() => gotoPage(0)} disabled={!canPreviousPage}>
