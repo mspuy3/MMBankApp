@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { useTable, usePagination, useSortBy, useGlobalFilter } from "react-table";
 import { getAccounts } from '../../repositories/accountRepository'
 
@@ -22,7 +23,7 @@ const columns = [
    {
       Header: "View Account",
       accessor: "id",
-      Cell: e => <a href={linkTemplate + e.value}> View </a>
+      Cell: e => <button> <a href={linkTemplate + e.value}> View </a> </button>
    }
 ];
 
