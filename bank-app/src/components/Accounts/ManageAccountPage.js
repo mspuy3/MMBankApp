@@ -2,12 +2,12 @@ import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router";
 import { toast } from "react-toastify";
 
-import "react-toastify/dist/ReactToastify.css";
-
 import AccountForm from "./AccountForm";
 import * as accountRepo from "../../repositories/accountRepository";
 import * as transactionRepo from "../../repositories/transactionRepository";
-import { getCurrentDate } from "../../helpers";
+import actions from "./actions";
+import * as accountSvc from "../../services/accountService";
+import * as transactionSvc from "../../services/transactionService";
 
 const CREATE_ACTION = "Create";
 const UPDATE_ACTION = "Update";
@@ -41,9 +41,14 @@ function ManageAccountPage() {
 
   // Handles change event for not nested inputs
   function handleChange(event) {
+    const val =
+      event.target.name === "balanceAmount"
+        ? parseFloat(event.target.value)
+        : event.target.value;
+
     const updatedAccount = {
       ...account,
-      [event.target.name]: event.target.value,
+      [event.target.name]: val,
     };
     setAccount(updatedAccount);
   }
@@ -78,50 +83,20 @@ function ManageAccountPage() {
       return;
     }
 
-    const transactionId = saveTransaction();
-    const updatedAccount = addTransactionIdToAccount(transactionId);
+    const transaction = transactionSvc.createTransaction(
+      actions.DEPOSIT,
+      parseFloat(account.balanceAmount),
+      "Initial Deposit"
+    );
+    const transactionId = transactionRepo.saveTransaction(transaction);
+    const updatedAccount = accountSvc.addTransactionIdToAccount(
+      account,
+      transactionId
+    );
     const accountId = accountRepo.saveAccount(updatedAccount);
-    debugger;
-    // props.history.push(`/manage-account/${accountId}`);
+
     toast.success("Account created.");
-    // navigate(`./${accountId}`, { replace: true });
-  }
-
-  /* 
-    Summary: 
-     - Saves transaction (initial deposit)
-     - Returns transaction Id
-    Params:
-  */
-  function saveTransaction() {
-    const transaction = {
-      id: null,
-      type: "DEPOSIT",
-      amount: account.balanceAmount,
-      date: getCurrentDate(),
-      notes: "Initial Deposit",
-      partner: null,
-    };
-
-    return transactionRepo.saveTransaction(transaction);
-  }
-
-  /* 
-    Summary: 
-     - Saves transaction (initial deposit) then add transaction Id to to account's transaction history
-     - Returns updated account with transaction id in transaction history
-    Params:
-  */
-  function addTransactionIdToAccount(transactionId) {
-    const updatedTransactionHistory = [...account.transactionHistory];
-    updatedTransactionHistory.push(transactionId);
-
-    const updatedAccount = {
-      ...account,
-      transactionHistory: [...updatedTransactionHistory],
-    };
-
-    return updatedAccount;
+    navigate(`../accounts/account-dashboard/${accountId}`, { replace: true });
   }
 
   /* 

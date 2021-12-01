@@ -5,6 +5,9 @@ import DashboardPage from "./Dashboard/DashboardPage";
 import AccountsPage from "./Accounts/AccountsPage";
 import Layout from "./Layout";
 import ManageAccountPage from "./Accounts/ManageAccountPage";
+import AccountDashboardPage from "./Accounts/AccountDashboardPage";
+
+import "react-toastify/dist/ReactToastify.css";
 
 function App() {
   return (
@@ -20,6 +23,10 @@ function App() {
           <Route
             path='/accounts/manage-account'
             element={<ManageAccountPage />}
+          />
+          <Route
+            path='/accounts/account-dashboard/:id'
+            element={<AccountDashboardPage />}
           />
         </Route>
       </Routes>

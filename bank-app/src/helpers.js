@@ -1,3 +1,5 @@
+// File that contains general helper/utility methods
+
 export function getCurrentDate() {
   let today = new Date();
 
