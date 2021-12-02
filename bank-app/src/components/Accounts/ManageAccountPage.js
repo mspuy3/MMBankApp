@@ -76,27 +76,44 @@ function ManageAccountPage() {
   */
   function handleSubmit(event) {
     event.preventDefault();
-    if (!formIsValid()) return;
-
-    if (action === UPDATE_ACTION) {
-      accountRepo.updateAccount(account);
+    if (!formIsValid()) {
+      toast.error("Some fields are not valid");
       return;
     }
 
-    const transaction = transactionSvc.createTransaction(
-      actions.DEPOSIT,
-      parseFloat(account.balanceAmount),
-      "Initial Deposit"
-    );
-    const transactionId = transactionRepo.saveTransaction(transaction);
-    const updatedAccount = accountSvc.addTransactionIdToAccount(
-      account,
-      transactionId
-    );
-    const accountId = accountRepo.saveAccount(updatedAccount);
+    switch (action) {
+      case CREATE_ACTION:
+        const transaction = transactionSvc.createTransaction(
+          actions.DEPOSIT,
+          parseFloat(account.balanceAmount),
+          "Initial Deposit"
+        );
 
-    toast.success("Account created.");
-    navigate(`../accounts/account-dashboard/${accountId}`, { replace: true });
+        const transactionId = transactionRepo.saveTransaction(transaction);
+        const updatedAccount = accountSvc.addTransactionIdToAccount(
+          account,
+          transactionId
+        );
+
+        const accountId = accountRepo.saveAccount(updatedAccount);
+        toast.success("Account created.");
+        navigate(`../accounts/account-dashboard/${accountId}`, {
+          replace: true,
+        });
+        break;
+      case UPDATE_ACTION:
+        const originalAccount = accountRepo.getAccountById(id);
+
+        if (JSON.stringify(originalAccount) === JSON.stringify(account)) {
+          toast.warning("No changes made");
+          return;
+        }
+
+        accountRepo.updateAccount(account);
+        toast.success("Account Updated.");
+        break;
+      default:
+    }
   }
 
   /* 
@@ -111,8 +128,12 @@ function ManageAccountPage() {
     if (!account.accountNumber) {
       _errors.accountNumber = "Account number is required";
     } else {
-      const _account = accountRepo.getAccountByAccountNo(account.accountNumber);
-      if (_account) _errors.accountNumber = "Account number already used";
+      if (!id) {
+        const _account = accountRepo.getAccountByAccountNo(
+          account.accountNumber
+        );
+        if (_account) _errors.accountNumber = "Account number already used";
+      }
     }
 
     if (!account.accountName) {
