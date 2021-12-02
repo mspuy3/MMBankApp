@@ -2,6 +2,6 @@
 
 export default {
   DEPOSIT: "Deposit",
-  WITHDRAW: "Withdraw",
+  WITHDRAWAL: "Withdrawal",
   SEND: "Send",
 };
