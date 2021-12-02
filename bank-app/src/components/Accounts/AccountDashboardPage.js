@@ -20,6 +20,10 @@ function AccountDashboardPage() {
     amount: 0.0,
     note: "",
   });
+  const [withdrawal, setWithdrawal] = useState({
+    amount: 0.0,
+    note: "",
+  });
   const [showModal, setShowModal] = useState(false);
   const [action, setAction] = useState("");
 
@@ -68,10 +72,44 @@ function AccountDashboardPage() {
     },
   };
 
-  const withdrawHandlers = {
+  const withdrawalHandlers = {
     click: () => {
-      setAction(actions.WITHDRAW);
+      setAction(actions.WITHDRAWAL);
       setShowModal(true);
+    },
+    submit: (event) => {
+      event.preventDefault();
+      let balance = account.balanceAmount - parseFloat(withdrawal.amount);
+      const updatedAccount = {
+        ...account,
+        balanceAmount: balance,
+      };
+
+      const transaction = transactionSvc.createTransaction(
+        actions.WITHDRAWAL,
+        withdrawal.amount,
+        withdrawal.note
+      );
+      const transactionId = transactionRepo.saveTransaction(transaction);
+      const _updatedAccount = accountSvc.addTransactionIdToAccount(
+        updatedAccount,
+        transactionId
+      );
+      accountRepo.updateAccount(_updatedAccount);
+      setAccount(updatedAccount);
+      toast.success("Withdrawal Successful");
+    },
+    change: (event) => {
+      const val =
+        event.target.name === "amount"
+          ? parseFloat(event.target.value)
+          : event.target.value;
+
+      const updatedWithdrawal = {
+        ...withdrawal,
+        [event.target.name]: val,
+      };
+      setWithdrawal(updatedWithdrawal);
     },
   };
 
@@ -95,8 +133,9 @@ function AccountDashboardPage() {
         action={action}
         account={account}
         deposit={deposit}
+        withdrawal={withdrawal}
         depositHandlers={depositHandlers}
-        withdrawHandlers={withdrawHandlers}
+        withdrawalHandlers={withdrawalHandlers}
         sendHandlers={sendHandlers}
         modalHandlers={modalHandlers}
         showModal={showModal}

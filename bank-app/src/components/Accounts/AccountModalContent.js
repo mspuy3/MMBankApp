@@ -1,6 +1,7 @@
 import React from "react";
 import actions from "./actions";
 import DepositContent from "./DepositContent";
+import WithdrawalContent from "./WithdrawalContent";
 
 function AccountModalContent(props) {
   function renderAction() {
@@ -12,6 +13,15 @@ function AccountModalContent(props) {
             handleSubmit={props.depositHandlers.submit}
             handleChange={props.depositHandlers.change}
             deposit={props.deposit}
+          />
+        );
+      case actions.WITHDRAWAL:
+        return (
+          <WithdrawalContent
+            account={props.account}
+            handleSubmit={props.withdrawalHandlers.submit}
+            handleChange={props.withdrawalHandlers.change}
+            withdrawal={props.withdrawal}
           />
         );
       default:
