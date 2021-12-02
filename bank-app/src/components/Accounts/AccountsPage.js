@@ -8,7 +8,6 @@ function AccountsPage() {
       <h1>Accounts</h1>
       <h2>List of All Accounts</h2>
       <AccountsTable />
-      
    </div>
   )
 }
