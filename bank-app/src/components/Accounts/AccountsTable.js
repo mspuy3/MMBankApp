@@ -7,11 +7,9 @@ import {
   useGlobalFilter,
 } from "react-table";
 import { getAccounts } from "../../repositories/accountRepository";
-import initLocalStorage from "../../initLocalStorage"
-
-let accounts = getAccounts();
 
 //Sets the header of the table. accessor matches the key of the object elements from the source ( user objects in the accounts array in the localStorage) //
+
 let linkTemplate = "/accounts/account-dashboard/";
 
 const columns = [
@@ -55,16 +53,7 @@ const GlobalFilter = ({ filter, setFilter }) => {
 
 //generates the actual table//
 const AccountsTable = () => {
-
-  // const accounts = getAccounts();
-  // removed the code above as it breaks the table functions and features. it runs "getAccounts" multiple times
-  // we only need to to call "getAccounts" once. so it must be placed outside the function
-  // the "if statement" below prevents the initial bug when deleting the accounts key in the localStorage
-  if (accounts == null) {
-    initLocalStorage();
-    accounts = getAccounts();
-  }
-
+  const accounts = getAccounts();
   // Use the state and functions returned from useTable to build your UI//
   const {
     getTableProps,
