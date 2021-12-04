@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import {
   useTable,
@@ -53,7 +53,12 @@ const GlobalFilter = ({ filter, setFilter }) => {
 
 //generates the actual table//
 const AccountsTable = () => {
-  const accounts = getAccounts();
+  const [accounts, setAccounts] = useState([]);
+
+  useEffect(() => {
+    setAccounts(getAccounts());
+  }, []);
+
   // Use the state and functions returned from useTable to build your UI//
   const {
     getTableProps,
