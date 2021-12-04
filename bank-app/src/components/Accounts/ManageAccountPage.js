@@ -24,6 +24,7 @@ function ManageAccountPage() {
       firstName: "",
       middleName: "",
       lastName: "",
+      userId: null,
     },
     balanceAmount: 0.0,
     transactionHistory: [],

@@ -3,12 +3,30 @@
 // Service that initialize accounts array into empty array in local storage
 // Service that initialize accounts array with dummy accounts in local storage
 
-import testAccounts from './testAccounts.json';
-
+import testAccounts from "./testAccounts.json";
 
 export default function initLocalStorage() {
+  initUsers();
+  initLoggedInUser();
   initAccounts();
   initTransactions();
+}
+
+function initUsers() {
+  const masterAdmin = {
+    username: "masterAdmin",
+    password: "12345",
+  };
+
+  if (localStorage.getItem("users") === null) {
+    localStorage.setItem("users", JSON.stringify([masterAdmin]));
+  }
+}
+
+function initLoggedInUser() {
+  if (localStorage.getItem("loggedInUser") === null) {
+    localStorage.setItem("loggedInUser", JSON.stringify({}));
+  }
 }
 
 function initAccounts() {
