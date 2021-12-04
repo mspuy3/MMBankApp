@@ -1,20 +1,29 @@
 import { Route, Routes } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 
-import DashboardPage from "./Dashboard/DashboardPage";
 import AccountsPage from "./Accounts/AccountsPage";
 import Layout from "./Layout";
 import ManageAccountPage from "./Accounts/ManageAccountPage";
 import AccountDashboardPage from "./Accounts/AccountDashboardPage";
+import RegisterUserPage from "./Users/ManageUserPage";
 
 import "react-toastify/dist/ReactToastify.css";
+import UserLogin from "./Users/UserLogin";
+import AdminDashboardPage from "./Admin/AdminDashboardPage";
 
 function App() {
   return (
     <div>
       <Routes>
         <Route path='/' exact element={<Layout />}>
-          <Route index element={<DashboardPage />} />
+          <Route index element={<UserLogin />} />
+          <Route path='/user/user-login' element={<UserLogin />} />
+          <Route
+            path='/admin/admin-dashboard'
+            element={<AdminDashboardPage />}
+          />
+          <Route path='/manage-user/:id' element={<RegisterUserPage />} />
+          <Route path='/manage-user' element={<RegisterUserPage />} />
           <Route path='/accounts' element={<AccountsPage />} />
           <Route
             path='/accounts/manage-account/:id'
