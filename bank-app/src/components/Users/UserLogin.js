@@ -23,7 +23,7 @@ function UserLogin() {
 
   useEffect(() => {
     const loggedInUser = userRepo.getLoggedInUser();
-    if (loggedInUser) {
+    if (loggedInUser.length > 0) {
       navigate(`../admin/admin-dashboard`, { replace: true });
     }
   });
