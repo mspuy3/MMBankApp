@@ -16,11 +16,17 @@ function AccountDashboardPage() {
   const { id } = useParams();
 
   const [account, setAccount] = useState(accountRepo.getAccountById(id));
+  // const [partner, setPartner] = useState("");
   const [deposit, setDeposit] = useState({
     amount: 0.0,
     note: "",
   });
   const [withdrawal, setWithdrawal] = useState({
+    amount: 0.0,
+    note: "",
+  });
+  const [send, setSend] = useState({
+    partner: "",
     amount: 0.0,
     note: "",
   });
@@ -118,6 +124,44 @@ function AccountDashboardPage() {
       setAction(actions.SEND);
       setShowModal(true);
     },
+
+    submit: (event) => {
+      event.preventDefault();
+      
+      let balance = account.balanceAmount - parseFloat(send.amount);
+      const updatedAccount = {
+        ...account,
+        balanceAmount: balance,
+      };
+
+      const transaction = transactionSvc.createTransaction(
+        actions.SEND,
+        send.amount,
+        send.note,
+        send.partner
+      );
+      const transactionId = transactionRepo.saveTransaction(transaction);
+      const _updatedAccount = accountSvc.addTransactionIdToAccount(
+        updatedAccount,
+        transactionId
+      );
+      accountRepo.updateAccount(_updatedAccount);
+      setAccount(updatedAccount);
+      toast.success("Send Successful");
+    },
+    
+    change: (event) => {
+      const val =
+        event.target.name === "amount"
+          ? parseFloat(event.target.value)
+          : event.target.value;
+
+      const updatedSend = {
+        ...send,
+        [event.target.name]: val,
+      };
+      setSend(updatedSend);
+    },
   };
 
   const modalHandlers = {
@@ -134,6 +178,7 @@ function AccountDashboardPage() {
         account={account}
         deposit={deposit}
         withdrawal={withdrawal}
+        send={send}
         depositHandlers={depositHandlers}
         withdrawalHandlers={withdrawalHandlers}
         sendHandlers={sendHandlers}

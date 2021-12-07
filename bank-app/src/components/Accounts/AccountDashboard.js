@@ -34,8 +34,11 @@ function AccountDashboard(props) {
             account={props.account}
             deposit={props.deposit}
             withdrawal={props.withdrawal}
+            partner={props.partner}
+            send={props.send}
             depositHandlers={props.depositHandlers}
             withdrawalHandlers={props.withdrawalHandlers}
+            sendHandlers={props.sendHandlers}
             modalHandlers={props.modalHandlers}
           />
         </Modal>

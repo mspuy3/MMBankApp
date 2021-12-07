@@ -2,6 +2,7 @@ import React from "react";
 import actions from "./actions";
 import DepositContent from "./DepositContent";
 import WithdrawalContent from "./WithdrawalContent";
+import SendContent from "./SendContent";
 
 function AccountModalContent(props) {
   function renderAction() {
@@ -24,6 +25,16 @@ function AccountModalContent(props) {
             withdrawal={props.withdrawal}
           />
         );
+        case actions.SEND:
+          return (
+            <SendContent
+              account={props.account}
+              partner={props.partner}
+              handleSubmit={props.sendHandlers.submit}
+              handleChange={props.sendHandlers.change}
+              send={props.send}
+            />
+          );
       default:
     }
   }
