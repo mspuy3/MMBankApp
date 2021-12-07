@@ -49,8 +49,6 @@ export function saveUser(user) {
 
   users.push(user);
   localStorage.setItem("users", JSON.stringify(users));
-
-  return user.id;
 }
 
 /* 

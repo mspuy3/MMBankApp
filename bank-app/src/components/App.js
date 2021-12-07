@@ -5,7 +5,7 @@ import AccountsPage from "./Accounts/AccountsPage";
 import Layout from "./Layout";
 import ManageAccountPage from "./Accounts/ManageAccountPage";
 import AccountDashboardPage from "./Accounts/AccountDashboardPage";
-import RegisterUserPage from "./Users/ManageUserPage";
+import ManageUserPage from "./Users/ManageUserPage";
 
 import "react-toastify/dist/ReactToastify.css";
 import UserLogin from "./Users/UserLogin";
@@ -17,13 +17,13 @@ function App() {
       <Routes>
         <Route path='/' exact element={<Layout />}>
           <Route index element={<UserLogin />} />
-          <Route path='/user/user-login' element={<UserLogin />} />
+          <Route path='/users/user-login' element={<UserLogin />} />
           <Route
             path='/admin/admin-dashboard'
             element={<AdminDashboardPage />}
           />
-          <Route path='/manage-user/:id' element={<RegisterUserPage />} />
-          <Route path='/manage-user' element={<RegisterUserPage />} />
+          <Route path='/users/manage-user/:id' element={<ManageUserPage />} />
+          <Route path='/users/manage-user' element={<ManageUserPage />} />
           <Route path='/accounts' element={<AccountsPage />} />
           <Route
             path='/accounts/manage-account/:id'

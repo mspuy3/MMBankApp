@@ -9,7 +9,7 @@ function Header() {
 
   function logOut() {
     userSvc.logOut();
-    navigate(`../user/user-login`, { replace: true });
+    navigate(`../users/user-login`, { replace: true });
   }
 
   return (

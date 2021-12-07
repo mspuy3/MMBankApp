@@ -1,19 +1,18 @@
 import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router";
+import { Link } from "react-router-dom";
 
 import LoginForm from "./LoginForm";
 import * as userSvc from "../../services/userService";
 import * as userRepo from "../../repositories/userRepository";
-
-const USER_TYPES = {
-  ADMIN: "admin",
-  ACCOUNT_HOLDER: "accountHolder",
-};
+import * as accountRepo from "../../repositories/accountRepository";
+import { USER_TYPES } from "./constants";
 
 function UserLogin() {
   const [errors, setErrors] = useState({});
   const [user, setUser] = useState({
+    accountNumber: "",
     username: "",
     password: "",
     userType: "",
@@ -52,6 +51,14 @@ function UserLogin() {
       case USER_TYPES.ADMIN:
         navigate(`../admin/admin-dashboard`, { replace: true });
         break;
+      case USER_TYPES.ACCOUNT_HOLDER:
+        const account = accountRepo.getAccountByAccountNo(
+          userInDb.accountNumber
+        );
+        navigate(`../accounts/account-dashboard/${account.id}`, {
+          replace: true,
+        });
+        break;
       default:
     }
 
@@ -88,6 +95,7 @@ function UserLogin() {
         onSubmit={handleSubmit}
         errors={errors}
       />
+      <Link to='../users/manage-user'>Register</Link>
     </div>
   );
 }

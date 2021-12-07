@@ -2,8 +2,9 @@ import React from "react";
 import SelectInput from "../common/SelectInput";
 import TextInput from "../common/TextInput";
 import PasswordInput from "../common/PasswordInput";
+import { USER_TYPES } from "./constants";
 
-const USER_TYPES = [
+const OPTIONS_USER_TYPES = [
   { label: "Admin", value: "admin" },
   { label: "Account Holder", value: "accountHolder" },
 ];
@@ -11,6 +12,16 @@ const USER_TYPES = [
 function UserForm(props) {
   return (
     <form onSubmit={props.onSubmit}>
+      <SelectInput
+        id='userType'
+        label='User Type'
+        name='userType'
+        value={props.user.userType || ""}
+        onChange={props.onChange}
+        options={OPTIONS_USER_TYPES}
+        error={props.errors.userType}
+      />
+
       <TextInput
         id='username'
         label='Username'
@@ -29,15 +40,16 @@ function UserForm(props) {
         error={props.errors.password}
       />
 
-      <SelectInput
-        id='userType'
-        label='User Type'
-        name='userType'
-        value={props.user.userType || ""}
-        onChange={props.onChange}
-        options={USER_TYPES}
-        error={props.errors.userType}
-      />
+      {props.user.userType === USER_TYPES.ACCOUNT_HOLDER && (
+        <TextInput
+          id='accountNumber'
+          label='Account Number'
+          name='accountNumber'
+          value={props.user.accountNumber || ""}
+          onChange={props.onChange}
+          error={props.errors.accountNumber}
+        />
+      )}
 
       <input type='submit' value='Save' />
     </form>
