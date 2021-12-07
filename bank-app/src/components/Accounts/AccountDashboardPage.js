@@ -51,67 +51,78 @@ function AccountDashboardPage() {
 
     submit: (event) => {
       event.preventDefault();
+
+      
           
-      if (!partner) {
+      switch (partner) {
 
-        toast.error("Account Number does not exist");
+        case undefined:
+          
+          toast.error("Account Number does not exist");
+          break;
+      
+        default:
 
-        console.log(typeof partner)
+          switch (partner.accountNumber) {
 
-      } else { 
+            case account.accountNumber:
+              toast.error("Cannot send to self");
+              break;
+            
+            default:
+              let balanceSender = account.balanceAmount - parseFloat(send.amount);
+              const updatedAccount = {
+                ...account,
+                balanceAmount: balanceSender,
+              };
 
-        let balanceSender = account.balanceAmount - parseFloat(send.amount);
-        const updatedAccount = {
-          ...account,
-          balanceAmount: balanceSender,
-        };
+              let balanceReceiver = partner.balanceAmount + parseFloat(send.amount);
+              const updatedPartner = {
+                ...partner,
+                balanceAmount: balanceReceiver,
+              }
 
-        let balanceReceiver = partner.balanceAmount + parseFloat(send.amount);
-        const updatedPartner = {
-          ...partner,
-          balanceAmount: balanceReceiver,
-        }
+              const transactionSender = transactionSvc.createTransaction(
+                actions.SEND,
+                send.amount,
+                send.note,
+                send.partner
+              );
 
-        const transactionSender = transactionSvc.createTransaction(
-          actions.SEND,
-          send.amount,
-          send.note,
-          send.partner
-        );
+              const transactionReceiver = transactionSvc.createTransaction(
+                actions.RECEIVE,
+                send.amount,
+                send.note,
+                account.accountNumber
+              );
 
-        const transactionReceiver = transactionSvc.createTransaction(
-          actions.RECEIVE,
-          send.amount,
-          send.note,
-          account.accountNumber
-        );
-
-        const transactionIdSender = transactionRepo.saveTransaction(transactionSender);
-        const transactionIdReceiver = transactionRepo.saveTransaction(transactionReceiver);
-
-
-
-        const _updatedAccount = accountSvc.addTransactionIdToAccount(
-          updatedAccount,
-          transactionIdSender
-        );
-
-        const _updatedPartner = accountSvc.addTransactionIdToAccount(
-          updatedPartner,
-          transactionIdReceiver
-        );
-
-        accountRepo.updateAccount(_updatedAccount);
-        accountRepo.updateAccount(_updatedPartner);
-
-        setAccount(updatedAccount);
-        setPartner(updatedPartner)
-        
-        
-        toast.success("Send to " + partner.accountName + " Successful");
+              const transactionIdSender = transactionRepo.saveTransaction(transactionSender);
+              const transactionIdReceiver = transactionRepo.saveTransaction(transactionReceiver);
 
 
-        }
+
+              const _updatedAccount = accountSvc.addTransactionIdToAccount(
+                updatedAccount,
+                transactionIdSender
+              );
+
+              const _updatedPartner = accountSvc.addTransactionIdToAccount(
+                updatedPartner,
+                transactionIdReceiver
+              );
+
+              accountRepo.updateAccount(_updatedAccount);
+              accountRepo.updateAccount(_updatedPartner);
+
+              setAccount(updatedAccount);
+              setPartner(updatedPartner)
+              
+              
+              toast.success("Send to " + partner.accountName + " Successful");
+
+
+            }
+      }
     },
     
     change: (event) => {
