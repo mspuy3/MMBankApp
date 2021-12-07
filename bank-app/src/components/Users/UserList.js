@@ -1,4 +1,3 @@
-import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import {
   useTable,
@@ -6,32 +5,29 @@ import {
   useSortBy,
   useGlobalFilter,
 } from "react-table";
-import { getAccounts } from "../../repositories/accountRepository";
 
-//Sets the header of the table. accessor matches the key of the object elements from the source ( user objects in the accounts array in the localStorage) //
-
-let linkTemplate = "/accounts/account-dashboard/";
+let linkTemplate = "/users/manage-user/";
 
 const columns = [
   {
-    Header: "Account Number",
-    accessor: "accountNumber",
+    Header: "Name",
+    accessor: "fullName",
   },
   {
-    Header: "Account Name",
-    accessor: "accountName",
+    Header: "Username",
+    accessor: "username",
   },
   {
-    Header: "Balance Amount",
-    accessor: "balanceAmount",
+    Header: "Account Type",
+    accessor: "userType",
   },
   {
-    Header: "View",
+    Header: "Manage",
     accessor: "id",
     Cell: (e) => (
       <button>
         {" "}
-        <Link to={linkTemplate + e.value}> View </Link>{" "}
+        <Link to={linkTemplate + e.value}> Manage </Link>{" "}
       </button>
     ),
   },
@@ -43,7 +39,7 @@ const GlobalFilter = ({ filter, setFilter }) => {
     <div>
       Global Search:{" "}
       <input
-        placeholder='Search by Number or Name'
+        placeholder='Search by Name or Username'
         value={filter || ""}
         onChange={(e) => setFilter(e.target.value)}
       />
@@ -51,14 +47,7 @@ const GlobalFilter = ({ filter, setFilter }) => {
   );
 };
 
-//generates the actual table//
-const AccountsTable = () => {
-  const [accounts, setAccounts] = useState([]);
-
-  useEffect(() => {
-    setAccounts(getAccounts());
-  }, []);
-
+function UserList(props) {
   // Use the state and functions returned from useTable to build your UI//
   const {
     getTableProps,
@@ -82,7 +71,7 @@ const AccountsTable = () => {
   } = useTable(
     {
       columns,
-      data: accounts,
+      data: props.users,
       initialState: { pageIndex: 0 },
     },
     useGlobalFilter,
@@ -94,8 +83,8 @@ const AccountsTable = () => {
   // Render the UI for the search bar, table, and pagination //
   return (
     <>
-      <Link to='../accounts/manage-account/'>
-        <button>Create Account</button>
+      <Link to={linkTemplate}>
+        <button>Create Admin</button>
       </Link>
       <GlobalFilter filter={globalFilter} setFilter={setGlobalFilter} />
 
@@ -183,6 +172,6 @@ const AccountsTable = () => {
       </div>
     </>
   );
-};
+}
 
-export default AccountsTable;
+export default UserList;

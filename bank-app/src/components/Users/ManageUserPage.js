@@ -2,10 +2,12 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router";
+import { Link } from "react-router-dom";
 
 import UserForm from "./UserForm";
 import * as userRepo from "../../repositories/userRepository";
 import * as accountRepo from "../../repositories/accountRepository";
+import { USER_TYPES } from "../constants";
 
 const REGISTER_ACTION = "Register";
 const UPDATE_ACTION = "Update";
@@ -13,11 +15,16 @@ const UPDATE_ACTION = "Update";
 function ManageUserPage() {
   const [action, setAction] = useState(REGISTER_ACTION);
   const [errors, setErrors] = useState({});
+  const [loggedInUser, setLoggedInUser] = useState(userRepo.getLoggedInUser());
   const [user, setUser] = useState({
     id: null,
     username: "",
     password: "",
     userType: "",
+    accountNumber: "",
+    firstName: "",
+    middleName: "",
+    lastName: "",
   });
 
   const { id } = useParams();
@@ -28,6 +35,7 @@ function ManageUserPage() {
       setUser(userRepo.getUserById(id));
       setAction(UPDATE_ACTION);
     }
+    setLoggedInUser(userRepo.getLoggedInUser());
   }, [id]);
 
   function handleChange(event) {
@@ -42,21 +50,33 @@ function ManageUserPage() {
       return;
     }
 
+    const _user = addUserType(user);
+
     switch (action) {
       case REGISTER_ACTION:
-        userRepo.saveUser(user);
+        userRepo.saveUser(_user);
         toast.success("Account created.");
-        navigate("../users/user-login", { replace: true });
+
+        switch (loggedInUser.userType) {
+          case USER_TYPES.ADMIN:
+          case USER_TYPES.SUPER_ADMIN:
+            navigate("../users", { replace: true });
+            break;
+          default:
+            navigate("../users/user-login", { replace: true });
+            break;
+        }
+
         break;
       case UPDATE_ACTION:
         const originalUser = userRepo.getUserById(id);
 
-        if (JSON.stringify(originalUser) === JSON.stringify(user)) {
+        if (JSON.stringify(originalUser) === JSON.stringify(_user)) {
           toast.warning("No changes made");
           return;
         }
 
-        userRepo.updateUser(user);
+        userRepo.updateUser(_user);
         toast.success("Account Updated.");
         break;
       default:
@@ -72,11 +92,13 @@ function ManageUserPage() {
   function formIsValid() {
     const _errors = {};
 
-    if (!user.accountNumber) {
-      _errors.accountNumber = "Account Number is required";
-    } else {
-      if (!accountRepo.getAccountByAccountNo(user.accountNumber)) {
-        _errors.accountNumber = "Account Number does not exist";
+    if (loggedInUser.userType === USER_TYPES.ACCOUNT_HOLDER) {
+      if (!user.accountNumber) {
+        _errors.accountNumber = "Account Number is required";
+      } else {
+        if (!accountRepo.getAccountByAccountNo(user.accountNumber)) {
+          _errors.accountNumber = "Account Number does not exist";
+        }
       }
     }
 
@@ -93,22 +115,32 @@ function ManageUserPage() {
       _errors.password = "password is required";
     }
 
-    if (user.userType === "") {
-      _errors.userType = "User Type is required";
-    }
-
     setErrors(_errors);
     return Object.keys(_errors).length === 0;
   }
 
+  function addUserType() {
+    const updatedUser = {
+      ...user,
+      userType:
+        loggedInUser.userType === USER_TYPES.ADMIN ||
+        loggedInUser.userType === USER_TYPES.SUPER_ADMIN
+          ? USER_TYPES.ADMIN
+          : USER_TYPES.ACCOUNT_HOLDER,
+    };
+    return updatedUser;
+  }
+
   return (
     <div>
+      <Link to='../users/user-login'>Back to Login</Link>
       <h1>{action} User</h1>
       <UserForm
         user={user}
         onChange={handleChange}
         onSubmit={handleSubmit}
         errors={errors}
+        loggedInUser={loggedInUser}
       />
     </div>
   );

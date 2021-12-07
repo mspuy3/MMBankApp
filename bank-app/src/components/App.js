@@ -10,6 +10,7 @@ import ManageUserPage from "./Users/ManageUserPage";
 import "react-toastify/dist/ReactToastify.css";
 import UserLogin from "./Users/UserLogin";
 import AdminDashboardPage from "./Admin/AdminDashboardPage";
+import UserListPage from "./Users/UserListPage";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
       <Routes>
         <Route path='/' exact element={<Layout />}>
           <Route index element={<UserLogin />} />
+          <Route path='/users' element={<UserListPage />} />
           <Route path='/users/user-login' element={<UserLogin />} />
           <Route
             path='/admin/admin-dashboard'
