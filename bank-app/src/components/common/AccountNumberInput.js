@@ -1,6 +1,6 @@
 import React from "react";
 
-function NumberInput(props) {
+function AccountNumberInput(props) {
   return (
     <div>
       <label htmlFor={props.id}>{props.label}</label>
@@ -12,6 +12,7 @@ function NumberInput(props) {
         max={props.max}
         value={props.value}
         onChange={props.onChange}
+        placeholder='Enter 8-digit Account Number'
         required
       />
       {props.error && <div>{props.error}</div>}
@@ -19,4 +20,4 @@ function NumberInput(props) {
   );
 }
 
-export default NumberInput;
+export default AccountNumberInput;

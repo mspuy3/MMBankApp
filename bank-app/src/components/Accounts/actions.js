@@ -4,4 +4,5 @@ export default {
   DEPOSIT: "Deposit",
   WITHDRAWAL: "Withdrawal",
   SEND: "Send",
+  RECEIVE: "Receive",
 };
