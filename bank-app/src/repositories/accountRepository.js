@@ -30,7 +30,6 @@ export function getAccountById(id) {
 */
 export function getAccountByAccountNo(accountNo) {
   let accounts = JSON.parse(localStorage.getItem("accounts"));
-
   return accounts.find((account) => account.accountNumber === accountNo);
 }
 

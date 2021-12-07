@@ -14,8 +14,9 @@ export default function initLocalStorage() {
 
 function initUsers() {
   const masterAdmin = {
-    username: "masterAdmin",
+    username: "superAdmin",
     password: "12345",
+    userType: "superAdmin",
   };
 
   if (localStorage.getItem("users") === null) {
@@ -31,7 +32,7 @@ function initLoggedInUser() {
 
 function initAccounts() {
   if (localStorage.getItem("accounts") === null) {
-    localStorage.setItem("accounts", JSON.stringify(testAccounts));
+    localStorage.setItem("accounts", JSON.stringify([]));
   }
 }
 

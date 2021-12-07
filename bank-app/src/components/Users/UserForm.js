@@ -1,27 +1,11 @@
 import React from "react";
-import SelectInput from "../common/SelectInput";
 import TextInput from "../common/TextInput";
 import PasswordInput from "../common/PasswordInput";
-import { USER_TYPES } from "./constants";
-
-const OPTIONS_USER_TYPES = [
-  { label: "Admin", value: "admin" },
-  { label: "Account Holder", value: "accountHolder" },
-];
+import { USER_TYPES } from "../constants";
 
 function UserForm(props) {
   return (
     <form onSubmit={props.onSubmit}>
-      <SelectInput
-        id='userType'
-        label='User Type'
-        name='userType'
-        value={props.user.userType || ""}
-        onChange={props.onChange}
-        options={OPTIONS_USER_TYPES}
-        error={props.errors.userType}
-      />
-
       <TextInput
         id='username'
         label='Username'
@@ -40,7 +24,37 @@ function UserForm(props) {
         error={props.errors.password}
       />
 
-      {props.user.userType === USER_TYPES.ACCOUNT_HOLDER && (
+      {props.loggedInUser.userType === USER_TYPES.ADMIN ||
+      props.loggedInUser.userType === USER_TYPES.SUPER_ADMIN ? (
+        <>
+          <TextInput
+            id='firstName'
+            label='First Name'
+            name='firstName'
+            value={props.user.firstName || ""}
+            onChange={props.onChange}
+            error={props.errors.firstName}
+          />
+
+          <TextInput
+            id='middleName'
+            label='Middle Name'
+            name='middleName'
+            value={props.user.middleName || ""}
+            onChange={props.onChange}
+            error={props.errors.middleName}
+          />
+
+          <TextInput
+            id='lastName'
+            label='Last Name'
+            name='lastName'
+            value={props.user.lastName || ""}
+            onChange={props.onChange}
+            error={props.errors.lastName}
+          />
+        </>
+      ) : (
         <TextInput
           id='accountNumber'
           label='Account Number'

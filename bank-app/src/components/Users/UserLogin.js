@@ -7,7 +7,7 @@ import LoginForm from "./LoginForm";
 import * as userSvc from "../../services/userService";
 import * as userRepo from "../../repositories/userRepository";
 import * as accountRepo from "../../repositories/accountRepository";
-import { USER_TYPES } from "./constants";
+import { USER_TYPES } from "../constants";
 
 function UserLogin() {
   const [errors, setErrors] = useState({});
@@ -46,8 +46,8 @@ function UserLogin() {
       toast.error("Invalid Username or Password");
       return;
     }
-
     switch (userInDb.userType) {
+      case USER_TYPES.SUPER_ADMIN:
       case USER_TYPES.ADMIN:
         navigate(`../admin/admin-dashboard`, { replace: true });
         break;
