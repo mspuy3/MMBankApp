@@ -1,14 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router";
 
-import RegisterUserForm from "./UserForm";
+import UserForm from "./UserForm";
 import * as userRepo from "../../repositories/userRepository";
+import * as accountRepo from "../../repositories/accountRepository";
 
 const REGISTER_ACTION = "Register";
 const UPDATE_ACTION = "Update";
 
-function RegisterUserPage() {
+function ManageUserPage() {
   const [action, setAction] = useState(REGISTER_ACTION);
   const [errors, setErrors] = useState({});
   const [user, setUser] = useState({
@@ -19,6 +21,7 @@ function RegisterUserPage() {
   });
 
   const { id } = useParams();
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (id) {
@@ -41,8 +44,9 @@ function RegisterUserPage() {
 
     switch (action) {
       case REGISTER_ACTION:
-        const userId = userRepo.saveUser(user);
+        userRepo.saveUser(user);
         toast.success("Account created.");
+        navigate("../users/user-login", { replace: true });
         break;
       case UPDATE_ACTION:
         const originalUser = userRepo.getUserById(id);
@@ -68,6 +72,14 @@ function RegisterUserPage() {
   function formIsValid() {
     const _errors = {};
 
+    if (!user.accountNumber) {
+      _errors.accountNumber = "Account Number is required";
+    } else {
+      if (!accountRepo.getAccountByAccountNo(user.accountNumber)) {
+        _errors.accountNumber = "Account Number does not exist";
+      }
+    }
+
     if (!user.username) {
       _errors.username = "Username is required";
     } else {
@@ -92,7 +104,7 @@ function RegisterUserPage() {
   return (
     <div>
       <h1>{action} User</h1>
-      <RegisterUserForm
+      <UserForm
         user={user}
         onChange={handleChange}
         onSubmit={handleSubmit}
@@ -102,4 +114,4 @@ function RegisterUserPage() {
   );
 }
 
-export default RegisterUserPage;
+export default ManageUserPage;

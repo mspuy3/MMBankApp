@@ -10,7 +10,7 @@ function Layout() {
        share across all the pages on your site, like navigation. */
 
     <div>
-      {pathname !== "/user/user-login" && <Header />}
+      {pathname !== "/users/user-login" && <Header />}
       <Outlet />
     </div>
   );
