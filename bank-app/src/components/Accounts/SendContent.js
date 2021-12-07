@@ -9,7 +9,7 @@ function SendContent(props) {
       
       <AccountNumberInput
         id='partner'
-        label='Receiver Account Number'
+        label='Receiver'
         min='10000000'
         max='999999999'
         name='partner'

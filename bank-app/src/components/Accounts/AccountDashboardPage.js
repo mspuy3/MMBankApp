@@ -16,7 +16,7 @@ function AccountDashboardPage() {
   const { id } = useParams();
 
   const [account, setAccount] = useState(accountRepo.getAccountById(id));
-  // const [partner, setPartner] = useState("");
+
   const [deposit, setDeposit] = useState({
     amount: 0.0,
     note: "",
@@ -36,6 +36,98 @@ function AccountDashboardPage() {
   useEffect(() => {
     setAccount(accountRepo.getAccountById(id));
   }, [id, account.balanceAmount]);
+
+  const [partner, setPartner] = useState("");
+
+  useEffect(() => {
+    setPartner(accountRepo.getAccountByAccountNo(send.partner));
+  }, [send.partner]);
+
+  const sendHandlers = {
+    click: () => {
+      setAction(actions.SEND);
+      setShowModal(true);
+    },
+
+    submit: (event) => {
+      event.preventDefault();
+          
+      if (!partner) {
+
+        toast.error("Account Number does not exist");
+
+        console.log(typeof partner)
+
+      } else { 
+
+        let balanceSender = account.balanceAmount - parseFloat(send.amount);
+        const updatedAccount = {
+          ...account,
+          balanceAmount: balanceSender,
+        };
+
+        let balanceReceiver = partner.balanceAmount + parseFloat(send.amount);
+        const updatedPartner = {
+          ...partner,
+          balanceAmount: balanceReceiver,
+        }
+
+        const transactionSender = transactionSvc.createTransaction(
+          actions.SEND,
+          send.amount,
+          send.note,
+          send.partner
+        );
+
+        const transactionReceiver = transactionSvc.createTransaction(
+          actions.RECEIVE,
+          send.amount,
+          send.note,
+          account.accountNumber
+        );
+
+        const transactionIdSender = transactionRepo.saveTransaction(transactionSender);
+        const transactionIdReceiver = transactionRepo.saveTransaction(transactionReceiver);
+
+
+
+        const _updatedAccount = accountSvc.addTransactionIdToAccount(
+          updatedAccount,
+          transactionIdSender
+        );
+
+        const _updatedPartner = accountSvc.addTransactionIdToAccount(
+          updatedPartner,
+          transactionIdReceiver
+        );
+
+        accountRepo.updateAccount(_updatedAccount);
+        accountRepo.updateAccount(_updatedPartner);
+
+        setAccount(updatedAccount);
+        setPartner(updatedPartner)
+        
+        
+        toast.success("Send to " + partner.accountName + " Successful");
+
+
+        }
+    },
+    
+    change: (event) => {
+      const val =
+        event.target.name === "amount"
+          ? parseFloat(event.target.value)
+          : event.target.value;
+
+      const updatedSend = {
+        ...send,
+        [event.target.name]: val,
+      };
+      setSend(updatedSend);
+    },
+  };
+                              
 
   const depositHandlers = {
     click: () => {
@@ -119,50 +211,7 @@ function AccountDashboardPage() {
     },
   };
 
-  const sendHandlers = {
-    click: () => {
-      setAction(actions.SEND);
-      setShowModal(true);
-    },
 
-    submit: (event) => {
-      event.preventDefault();
-      
-      let balance = account.balanceAmount - parseFloat(send.amount);
-      const updatedAccount = {
-        ...account,
-        balanceAmount: balance,
-      };
-
-      const transaction = transactionSvc.createTransaction(
-        actions.SEND,
-        send.amount,
-        send.note,
-        send.partner
-      );
-      const transactionId = transactionRepo.saveTransaction(transaction);
-      const _updatedAccount = accountSvc.addTransactionIdToAccount(
-        updatedAccount,
-        transactionId
-      );
-      accountRepo.updateAccount(_updatedAccount);
-      setAccount(updatedAccount);
-      toast.success("Send Successful");
-    },
-    
-    change: (event) => {
-      const val =
-        event.target.name === "amount"
-          ? parseFloat(event.target.value)
-          : event.target.value;
-
-      const updatedSend = {
-        ...send,
-        [event.target.name]: val,
-      };
-      setSend(updatedSend);
-    },
-  };
 
   const modalHandlers = {
     close: () => {

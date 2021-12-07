@@ -12,6 +12,8 @@ function AccountNumberInput(props) {
         max={props.max}
         value={props.value}
         onChange={props.onChange}
+        placeholder='Enter 8-digit Account Number'
+        required
       />
       {props.error && <div>{props.error}</div>}
     </div>

@@ -12,6 +12,7 @@ function NumberInput(props) {
         max={props.max}
         value={props.value}
         onChange={props.onChange}
+        required
       />
       {props.error && <div>{props.error}</div>}
     </div>
