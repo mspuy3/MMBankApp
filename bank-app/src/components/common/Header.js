@@ -1,12 +1,18 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 import { useNavigate } from "react-router";
 
 import * as userSvc from "../../services/userService";
+import { getLoggedInUser } from "../../repositories/userRepository";
 import { USER_TYPES } from "../constants";
 
-function Header({ loggedInUser }) {
+function Header() {
+  const [loggedInUser, setLoggedInUser] = useState(getLoggedInUser());
   const navigate = useNavigate();
+
+  useEffect(() => {
+    setLoggedInUser(getLoggedInUser());
+  }, []);
 
   function logOut() {
     userSvc.logOut();
@@ -23,7 +29,9 @@ function Header({ loggedInUser }) {
           <NavLink to='/accounts'>Accounts</NavLink>)
         </nav>
       )}
-      <button onClick={logOut}>LogOut</button>
+      {Object.keys(loggedInUser).length > 0 && (
+        <button onClick={logOut}>LogOut</button>
+      )}
     </div>
   );
 }
