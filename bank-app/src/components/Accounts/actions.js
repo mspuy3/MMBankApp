@@ -5,4 +5,5 @@ export default {
   WITHDRAWAL: "Withdrawal",
   SEND: "Send",
   RECEIVE: "Receive",
+  TRANSACTIONS: "Transactions",
 };

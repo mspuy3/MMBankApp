@@ -222,7 +222,12 @@ function AccountDashboardPage() {
     },
   };
 
-
+  const transactionsHandlers = {
+    click: () => {
+      setAction(actions.TRANSACTIONS);
+      setShowModal(true);
+    },
+  }
 
   const modalHandlers = {
     close: () => {
@@ -242,6 +247,7 @@ function AccountDashboardPage() {
         depositHandlers={depositHandlers}
         withdrawalHandlers={withdrawalHandlers}
         sendHandlers={sendHandlers}
+        transactionsHandlers={transactionsHandlers}
         modalHandlers={modalHandlers}
         showModal={showModal}
       />
