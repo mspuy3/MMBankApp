@@ -5,6 +5,7 @@ import App from "./components/App";
 import reportWebVitals from "./reportWebVitals";
 import initLocalStorage from "./initLocalStorage";
 import { BrowserRouter } from "react-router-dom";
+import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 
 initLocalStorage();
 
