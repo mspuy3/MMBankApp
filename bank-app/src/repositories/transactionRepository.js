@@ -9,3 +9,7 @@ export function saveTransaction(transaction) {
 
   return id;
 }
+
+export function getTransactions() {
+  return JSON.parse(localStorage.getItem("transactions"));
+}

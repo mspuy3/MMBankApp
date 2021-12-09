@@ -3,6 +3,7 @@ import actions from "./actions";
 import DepositContent from "./DepositContent";
 import WithdrawalContent from "./WithdrawalContent";
 import SendContent from "./SendContent";
+import TransactionsContent from "./TransactionsContent";
 
 function AccountModalContent(props) {
   function renderAction() {
@@ -35,6 +36,13 @@ function AccountModalContent(props) {
               send={props.send}
             />
           );
+        case actions.TRANSACTIONS:
+          return (
+            <TransactionsContent
+              account={props.account}
+              
+            />
+          )
       default:
     }
   }
