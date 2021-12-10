@@ -4,6 +4,7 @@ import DepositContent from "./DepositContent";
 import WithdrawalContent from "./WithdrawalContent";
 import SendContent from "./SendContent";
 import TransactionsContent from "./TransactionsContent";
+import BudgetAppContent from "./BudgetAppContent";
 
 function AccountModalContent(props) {
   function renderAction() {
@@ -26,23 +27,29 @@ function AccountModalContent(props) {
             withdrawal={props.withdrawal}
           />
         );
-        case actions.SEND:
-          return (
-            <SendContent
-              account={props.account}
-              partner={props.partner}
-              handleSubmit={props.sendHandlers.submit}
-              handleChange={props.sendHandlers.change}
-              send={props.send}
-            />
-          );
-        case actions.TRANSACTIONS:
-          return (
-            <TransactionsContent
-              account={props.account}
-              
-            />
-          )
+      case actions.SEND:
+        return (
+          <SendContent
+            account={props.account}
+            partner={props.partner}
+            handleSubmit={props.sendHandlers.submit}
+            handleChange={props.sendHandlers.change}
+            send={props.send}
+          />
+        );
+      case actions.TRANSACTIONS:
+        return <TransactionsContent account={props.account} />;
+      case actions.BUDGET:
+        return (
+          <BudgetAppContent
+            expense={props.expense}
+            expenses={props.expenses}
+            budgetBalance={props.budgetBalance}
+            handleSubmit={props.budgetAppHandlers.submit}
+            handleChange={props.budgetAppHandlers.change}
+            handleDelete={props.budgetAppHandlers.delete}
+          />
+        );
       default:
     }
   }

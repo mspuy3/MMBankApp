@@ -6,4 +6,5 @@ export default {
   SEND: "Send",
   RECEIVE: "Receive",
   TRANSACTIONS: "Transactions",
+  BUDGET: "Budget",
 };
