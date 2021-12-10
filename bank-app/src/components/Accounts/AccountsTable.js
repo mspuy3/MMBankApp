@@ -146,16 +146,16 @@ const AccountsTable = () => {
       {/* Pagination buttons below. {' '} adds the space between. Remove {' '} during styling */}
       <div className='pagination d-flex justify-content-between'>
         <div>
-          <button onClick={() => gotoPage(0)} disabled={!canPreviousPage} className="btn btn-secondary">
+          <button onClick={() => gotoPage(0)} disabled={!canPreviousPage} className="btn btn-secondary btn-sm">
             {"<<"}
           </button>{" "}
-          <button onClick={() => previousPage()} disabled={!canPreviousPage} className="btn btn-secondary">
+          <button onClick={() => previousPage()} disabled={!canPreviousPage} className="btn btn-secondary btn-sm">
             {"<"}
           </button>{" "}
-          <button onClick={() => nextPage()} disabled={!canNextPage} className="btn btn-secondary">
+          <button onClick={() => nextPage()} disabled={!canNextPage} className="btn btn-secondary btn-sm">
             {">"}
           </button>{" "}
-          <button onClick={() => gotoPage(pageCount - 1)} disabled={!canNextPage} className="btn btn-secondary">
+          <button onClick={() => gotoPage(pageCount - 1)} disabled={!canNextPage} className="btn btn-secondary btn-sm">
             {">>"}
           </button>{" "}
         </div>
@@ -177,7 +177,7 @@ const AccountsTable = () => {
                 const page = e.target.value ? Number(e.target.value) - 1 : 0;
                 gotoPage(page);
               }}
-              className="rounded border-1"
+              className="rounded border-1 text-center"
               
               style={{width: "3em"}}
             />
