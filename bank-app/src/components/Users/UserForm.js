@@ -6,66 +6,94 @@ import { USER_TYPES } from "../constants";
 function UserForm(props) {
   return (
     <form onSubmit={props.onSubmit}>
-      <TextInput
-        id='username'
-        label='Username'
-        name='username'
-        value={props.user.username || ""}
-        onChange={props.onChange}
-        error={props.errors.username}
-      />
+      <div className='row mb-2'>
+        <div className='col'>
+          <TextInput
+            id='username'
+            label='Username'
+            name='username'
+            value={props.user.username || ""}
+            onChange={props.onChange}
+            error={props.errors.username}
+          />
+        </div>
+      </div>
 
-      <PasswordInput
-        id='password'
-        label='Password'
-        name='password'
-        value={props.user.password || ""}
-        onChange={props.onChange}
-        error={props.errors.password}
-      />
+      <div className='row mb-2'>
+        <div className='col'>
+          <PasswordInput
+            id='password'
+            label='Password'
+            name='password'
+            value={props.user.password || ""}
+            onChange={props.onChange}
+            error={props.errors.password}
+          />
+        </div>
+      </div>
 
       {props.loggedInUser.userType === USER_TYPES.ADMIN ||
       props.loggedInUser.userType === USER_TYPES.SUPER_ADMIN ? (
         <>
-          <TextInput
-            id='firstName'
-            label='First Name'
-            name='firstName'
-            value={props.user.firstName || ""}
-            onChange={props.onChange}
-            error={props.errors.firstName}
-          />
+          <div className='row mb-2'>
+            <div className='col'>
+              <TextInput
+                id='firstName'
+                label='First Name'
+                name='firstName'
+                value={props.user.firstName || ""}
+                onChange={props.onChange}
+                error={props.errors.firstName}
+              />
+            </div>
+          </div>
 
-          <TextInput
-            id='middleName'
-            label='Middle Name'
-            name='middleName'
-            value={props.user.middleName || ""}
-            onChange={props.onChange}
-            error={props.errors.middleName}
-          />
+          <div className='row mb-2'>
+            <div className='col'>
+              <TextInput
+                id='middleName'
+                label='Middle Name'
+                name='middleName'
+                value={props.user.middleName || ""}
+                onChange={props.onChange}
+                error={props.errors.middleName}
+              />
+            </div>
+          </div>
 
-          <TextInput
-            id='lastName'
-            label='Last Name'
-            name='lastName'
-            value={props.user.lastName || ""}
-            onChange={props.onChange}
-            error={props.errors.lastName}
-          />
+          <div className='row mb-2'>
+            <div className='col'>
+              <TextInput
+                id='lastName'
+                label='Last Name'
+                name='lastName'
+                value={props.user.lastName || ""}
+                onChange={props.onChange}
+                error={props.errors.lastName}
+              />
+            </div>
+          </div>
         </>
       ) : (
-        <TextInput
-          id='accountNumber'
-          label='Account Number'
-          name='accountNumber'
-          value={props.user.accountNumber || ""}
-          onChange={props.onChange}
-          error={props.errors.accountNumber}
-        />
+        <div className='row mb-2'>
+          <div className='col'>
+            <TextInput
+              id='accountNumber'
+              label='Account Number'
+              name='accountNumber'
+              value={props.user.accountNumber || ""}
+              onChange={props.onChange}
+              error={props.errors.accountNumber}
+            />
+          </div>
+        </div>
       )}
 
-      <input type='submit' value='Save' />
+      <div className='row text-center mt-3'>
+        <div className='col'>
+          <input type='submit' value='Save' className='btn btn-primary w-100' />
+        </div>
+      </div>
     </form>
   );
 }
