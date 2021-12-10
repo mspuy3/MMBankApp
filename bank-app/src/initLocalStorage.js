@@ -10,6 +10,7 @@ export default function initLocalStorage() {
   initLoggedInUser();
   initAccounts();
   initTransactions();
+  initExpenses();
 }
 
 function initUsers() {
@@ -39,5 +40,11 @@ function initAccounts() {
 function initTransactions() {
   if (localStorage.getItem("transactions") === null) {
     localStorage.setItem("transactions", JSON.stringify([]));
+  }
+}
+
+function initExpenses() {
+  if (localStorage.getItem("expenses") === null) {
+    localStorage.setItem("expenses", JSON.stringify([]));
   }
 }

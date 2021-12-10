@@ -5,6 +5,7 @@ import { toast } from "react-toastify";
 
 import * as accountRepo from "../../repositories/accountRepository";
 import * as transactionRepo from "../../repositories/transactionRepository";
+import * as expenseRepo from "../../repositories/expenseRepository";
 import * as accountSvc from "../../services/accountService";
 import * as transactionSvc from "../../services/transactionService";
 import actions from "./actions";
@@ -16,7 +17,6 @@ function AccountDashboardPage() {
   const { id } = useParams();
 
   const [account, setAccount] = useState(accountRepo.getAccountById(id));
-
   const [deposit, setDeposit] = useState({
     amount: 0.0,
     note: "",
@@ -30,57 +30,70 @@ function AccountDashboardPage() {
     amount: 0.0,
     note: "",
   });
+  const [expense, setExpense] = useState({
+    name: "",
+    amount: 0.0,
+  });
+  const [expenses, setExpenses] = useState({
+    id: null,
+    accountNumber: null,
+    _expenses: [],
+  });
   const [showModal, setShowModal] = useState(false);
   const [action, setAction] = useState("");
+  const [partner, setPartner] = useState("");
+  const [budgetBalance, setBudgetBalance] = useState(account.balanceAmount);
 
   useEffect(() => {
     setAccount(accountRepo.getAccountById(id));
-  }, [id, account.balanceAmount]);
-
-  const [partner, setPartner] = useState("");
-
-  useEffect(() => {
     setPartner(accountRepo.getAccountByAccountNo(send.partner));
-  }, [send.partner]);
+    if (expenseRepo.getExpensesByAccountNumber(account.accountNumber)) {
+      setExpenses(
+        expenseRepo.getExpensesByAccountNumber(account.accountNumber)
+      );
+    } else {
+      setExpenses({
+        id: null,
+        accountNumber: null,
+        _expenses: [],
+      });
+    }
+    setBudgetBalance(account.balanceAmount);
+  }, [id, account.balanceAmount, account.accountNumber, send.partner]);
 
   const sendHandlers = {
     click: () => {
       setAction(actions.SEND);
       setShowModal(true);
     },
-
     submit: (event) => {
       event.preventDefault();
 
-      
-          
       switch (partner) {
-
         case undefined:
-          
           toast.error("Account Number does not exist");
           break;
-      
+
         default:
-
           switch (partner.accountNumber) {
-
             case account.accountNumber:
               toast.error("Cannot send to self");
               break;
-            
+
             default:
-              let balanceSender = account.balanceAmount - parseFloat(send.amount);
+              let balanceSender =
+                account.balanceAmount - parseFloat(send.amount);
               const updatedAccount = {
                 ...account,
                 balanceAmount: balanceSender,
               };
 
-              let balanceReceiver = partner.balanceAmount + parseFloat(send.amount);
+              let balanceReceiver =
+                partner.balanceAmount + parseFloat(send.amount);
               const updatedPartner = {
                 ...partner,
                 balanceAmount: balanceReceiver,
-              }
+              };
 
               const transactionSender = transactionSvc.createTransaction(
                 actions.SEND,
@@ -96,10 +109,10 @@ function AccountDashboardPage() {
                 account.accountNumber
               );
 
-              const transactionIdSender = transactionRepo.saveTransaction(transactionSender);
-              const transactionIdReceiver = transactionRepo.saveTransaction(transactionReceiver);
-
-
+              const transactionIdSender =
+                transactionRepo.saveTransaction(transactionSender);
+              const transactionIdReceiver =
+                transactionRepo.saveTransaction(transactionReceiver);
 
               const _updatedAccount = accountSvc.addTransactionIdToAccount(
                 updatedAccount,
@@ -115,16 +128,13 @@ function AccountDashboardPage() {
               accountRepo.updateAccount(_updatedPartner);
 
               setAccount(updatedAccount);
-              setPartner(updatedPartner)
-              
-              
+              setPartner(updatedPartner);
+
               toast.success("Send to " + partner.accountName + " Successful");
-
-
-            }
+          }
       }
     },
-    
+
     change: (event) => {
       const val =
         event.target.name === "amount"
@@ -138,7 +148,6 @@ function AccountDashboardPage() {
       setSend(updatedSend);
     },
   };
-                              
 
   const depositHandlers = {
     click: () => {
@@ -227,7 +236,44 @@ function AccountDashboardPage() {
       setAction(actions.TRANSACTIONS);
       setShowModal(true);
     },
-  }
+  };
+  const budgetAppHandlers = {
+    click: () => {
+      setAction(actions.BUDGET);
+      setShowModal(true);
+    },
+    change: (event) => {
+      const val =
+        event.target.name === "amount"
+          ? parseFloat(event.target.value)
+          : event.target.value;
+
+      const updatedExpense = {
+        ...expense,
+        [event.target.name]: val,
+      };
+
+      setExpense(updatedExpense);
+      console.log(expense);
+    },
+    submit: (event) => {
+      event.preventDefault();
+      console.log({ ...expenses });
+      const updatedExpenses = {
+        ...expenses,
+        accountNumber: account.accountNumber,
+        _expenses: [...expenses._expenses, expense],
+      };
+      expenseRepo.saveExpenses(updatedExpenses);
+
+      setExpenses(updatedExpenses);
+      setBudgetBalance(budgetBalance - expense.amount);
+    },
+    delete: (event) => {
+      const index = event.target.id;
+      setExpenses(expenseRepo.deleteExpense(account.accountNumber, index));
+    },
+  };
 
   const modalHandlers = {
     close: () => {
@@ -244,10 +290,14 @@ function AccountDashboardPage() {
         deposit={deposit}
         withdrawal={withdrawal}
         send={send}
+        expense={expense}
+        expenses={expenses}
         depositHandlers={depositHandlers}
         withdrawalHandlers={withdrawalHandlers}
         sendHandlers={sendHandlers}
         transactionsHandlers={transactionsHandlers}
+        budgetAppHandlers={budgetAppHandlers}
+        budgetBalance={budgetBalance}
         modalHandlers={modalHandlers}
         showModal={showModal}
       />

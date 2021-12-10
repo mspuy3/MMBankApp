@@ -26,6 +26,7 @@ function AccountDashboard(props) {
         <button onClick={props.withdrawalHandlers.click}>Withdraw</button>
         <button onClick={props.sendHandlers.click}>Send</button>
         <button onClick={props.transactionsHandlers.click}>Transactions</button>
+        <button onClick={props.budgetAppHandlers.click}>Budget App</button>
 
         <Modal isOpen={props.showModal}>
           <AccountModalContent
@@ -36,10 +37,14 @@ function AccountDashboard(props) {
             withdrawal={props.withdrawal}
             partner={props.partner}
             send={props.send}
+            expense={props.expense}
+            expenses={props.expenses}
             depositHandlers={props.depositHandlers}
             withdrawalHandlers={props.withdrawalHandlers}
             sendHandlers={props.sendHandlers}
             transactionsHandlers={props.transactionsHandlers}
+            budgetAppHandlers={props.budgetAppHandlers}
+            budgetBalance={props.budgetBalance}
             modalHandlers={props.modalHandlers}
           />
         </Modal>
