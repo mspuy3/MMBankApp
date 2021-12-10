@@ -132,7 +132,7 @@ function ManageUserPage() {
   }
 
   return (
-    <div>
+    <div className='container-fluid'>
       <Link to='../users/user-login'>Back to Login</Link>
       <h1>{action} User</h1>
       <UserForm
