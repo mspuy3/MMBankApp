@@ -133,15 +133,27 @@ function ManageUserPage() {
 
   return (
     <div className='container-fluid'>
-      <Link to='../users/user-login'>Back to Login</Link>
-      <h1>{action} User</h1>
-      <UserForm
-        user={user}
-        onChange={handleChange}
-        onSubmit={handleSubmit}
-        errors={errors}
-        loggedInUser={loggedInUser}
-      />
+      <Link to='../users/user-login'> &larr; Back to Login</Link>
+      <div className='row abs-center'>
+        <div className='col'>
+          <div className='row text-center mb-3'>
+            <div className='col'>
+              <h1>{action} User</h1>
+            </div>
+          </div>
+          <div className='row'>
+            <div className='col'>
+              <UserForm
+                user={user}
+                onChange={handleChange}
+                onSubmit={handleSubmit}
+                errors={errors}
+                loggedInUser={loggedInUser}
+              />
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
