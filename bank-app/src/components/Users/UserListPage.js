@@ -12,10 +12,10 @@ function UserListPage() {
   }, []);
 
   return (
-    <>
-      <h1>User List</h1>
+    <div>
+      <h1 className="text-center">List of All Users</h1>
       <UserList users={users} />
-    </>
+    </div>
   );
 }
 
