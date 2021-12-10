@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router";
-import { Link } from "react-router-dom";
 
 import LoginForm from "./LoginForm";
 import * as userSvc from "../../services/userService";
@@ -87,15 +86,26 @@ function UserLogin() {
   }
 
   return (
-    <div>
-      <h1>Login</h1>
-      <LoginForm
-        user={user}
-        onChange={handleChange}
-        onSubmit={handleSubmit}
-        errors={errors}
-      />
-      <Link to='../users/manage-user'>Register</Link>
+    <div className='container-fluid'>
+      <div className='row abs-center'>
+        <div className='col'>
+          <div className='row text-center mb-3'>
+            <div className='col'>
+              <h1>Login</h1>
+            </div>
+          </div>
+          <div className='row'>
+            <div className='col'>
+              <LoginForm
+                user={user}
+                onChange={handleChange}
+                onSubmit={handleSubmit}
+                errors={errors}
+              />
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
