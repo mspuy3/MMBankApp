@@ -167,17 +167,29 @@ function ManageAccountPage() {
   }
 
   return (
-    <>
-      <h1>{action} Account</h1>
-      <AccountForm
-        action={action}
-        account={account}
-        handleChange={handleChange}
-        handleAccountHolderChange={handleAccountHolderChange}
-        handleSubmit={handleSubmit}
-        errors={errors}
-      />
-    </>
+    <div className='container-fluid'>
+      <div className='row abs-center'>
+        <div className='col'>
+          <div className='row text-center mb-3'>
+            <div className='col'>
+              <h1>{action} Account</h1>
+            </div>
+          </div>
+          <div className='row'>
+            <div className='col'>
+              <AccountForm
+                action={action}
+                account={account}
+                handleChange={handleChange}
+                handleAccountHolderChange={handleAccountHolderChange}
+                handleSubmit={handleSubmit}
+                errors={errors}
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   );
 }
 

@@ -3,8 +3,11 @@ import React from "react";
 function NumberInput(props) {
   return (
     <div>
-      <label htmlFor={props.id}>{props.label}</label>
+      <label className='form-label' htmlFor={props.id}>
+        {props.label}
+      </label>
       <input
+        className='form-control'
         id={props.id}
         type='number'
         name={props.name}
