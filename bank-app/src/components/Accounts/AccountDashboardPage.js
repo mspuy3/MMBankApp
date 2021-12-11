@@ -88,11 +88,12 @@ function AccountDashboardPage() {
 
             default:
               let balanceSender =
-                parseFloat(account.balanceAmount) - parseFloat(send.amount).toFixed(2);
+                parseFloat(account.balanceAmount) -
+                parseFloat(send.amount).toFixed(2);
 
-                balanceSender = (Math.round(balanceSender * 100)/100);
-                balanceSender = parseFloat(balanceSender).toFixed(2);
-              
+              balanceSender = Math.round(balanceSender * 100) / 100;
+              balanceSender = parseFloat(balanceSender).toFixed(2);
+
               const updatedAccount = {
                 ...account,
                 balanceAmount: balanceSender,
@@ -101,10 +102,10 @@ function AccountDashboardPage() {
               let balanceReceiver =
                 parseFloat(partner.balanceAmount) + parseFloat(send.amount);
 
-                  balanceReceiver = (Math.round(balanceReceiver * 100)/100);
-                  balanceReceiver = parseFloat(balanceReceiver).toFixed(2);
-              
-                const updatedPartner = {
+              balanceReceiver = Math.round(balanceReceiver * 100) / 100;
+              balanceReceiver = parseFloat(balanceReceiver).toFixed(2);
+
+              const updatedPartner = {
                 ...partner,
                 balanceAmount: balanceReceiver,
               };
@@ -170,10 +171,11 @@ function AccountDashboardPage() {
     },
     submit: (event) => {
       event.preventDefault();
-      let balance = parseFloat(account.balanceAmount) + parseFloat(deposit.amount);
+      let balance =
+        parseFloat(account.balanceAmount) + parseFloat(deposit.amount);
 
-        balance = Math.round(balance * 100)/100;
-        balance = parseFloat(balance).toFixed(2);
+      balance = Math.round(balance * 100) / 100;
+      balance = parseFloat(balance).toFixed(2);
 
       const updatedAccount = {
         ...account,
@@ -215,10 +217,11 @@ function AccountDashboardPage() {
     },
     submit: (event) => {
       event.preventDefault();
-      let balance = parseFloat(account.balanceAmount) - parseFloat(withdrawal.amount);
+      let balance =
+        parseFloat(account.balanceAmount) - parseFloat(withdrawal.amount);
 
-        balance = (Math.round(balance * 100)/100);
-        balance = parseFloat(balance).toFixed(2);
+      balance = Math.round(balance * 100) / 100;
+      balance = parseFloat(balance).toFixed(2);
 
       const updatedAccount = {
         ...account,
@@ -304,8 +307,7 @@ function AccountDashboardPage() {
   };
 
   return (
-    <>
-      <h1>Account Dashboard</h1>
+    <div className='container-fluid'>
       <AccountDashboard
         action={action}
         account={account}
@@ -323,7 +325,7 @@ function AccountDashboardPage() {
         modalHandlers={modalHandlers}
         showModal={showModal}
       />
-    </>
+    </div>
   );
 }
 

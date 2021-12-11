@@ -14,7 +14,7 @@ function TextInput(props) {
         value={props.value}
         onChange={props.onChange}
       />
-      {props.error && <div>{props.error}</div>}
+      {props.error && <div className='text-error'>{props.error}</div>}
     </div>
   );
 }
