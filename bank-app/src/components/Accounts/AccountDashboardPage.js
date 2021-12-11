@@ -58,8 +58,14 @@ function AccountDashboardPage() {
         _expenses: [],
       });
     }
-    setBudgetBalance(account.balanceAmount);
   }, [id, account.balanceAmount, account.accountNumber, send.partner]);
+
+  useEffect(() => {
+    const expenseSum = expenses._expenses.reduce((a, b) => {
+      return a + b.amount;
+    }, 0);
+    setBudgetBalance(account.balanceAmount - expenseSum);
+  }, [account.balanceAmount, expenses._expenses]);
 
   const sendHandlers = {
     click: () => {

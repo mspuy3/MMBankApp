@@ -56,7 +56,7 @@ function AccountModalContent(props) {
 
   return (
     <>
-      <div className='row'>
+      <div className='row mb-4'>
         <div className='col'>
           <button
             onClick={props.modalHandlers.close}
@@ -73,7 +73,7 @@ function AccountModalContent(props) {
         </div>
       </div> */}
 
-      <div className='row abs-center'>
+      <div className='row'>
         <div className='col'>{renderAction()}</div>
       </div>
     </>

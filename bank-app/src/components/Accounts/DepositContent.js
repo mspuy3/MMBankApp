@@ -4,7 +4,7 @@ import TextInput from "../common/TextInput";
 
 function DepositContent(props) {
   return (
-    <form onSubmit={props.handleSubmit}>
+    <form onSubmit={props.handleSubmit} className='abs-center'>
       <div className='row mb-2'>
         <div className='col'>
           <NumberInput
