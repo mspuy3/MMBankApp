@@ -14,7 +14,7 @@ function AccountDashboard(props) {
             <div class='card'>
               <div class='card-body'>
                 <h5 class='card-title'>Account Number:</h5>
-                <p class='card-text fw-bold fs-1 text-end'>
+                <p class='card-text fw-bold fs-1 text-start'>
                   {props.account.accountNumber}
                 </p>
               </div>
@@ -24,7 +24,7 @@ function AccountDashboard(props) {
             <div class='card'>
               <div class='card-body'>
                 <h5 class='card-title'>Account Name:</h5>
-                <p class='card-text fw-bold fs-1 text-end'>
+                <p class='card-text fw-bold fs-1 text-start'>
                   {props.account.accountName}
                 </p>
               </div>
@@ -34,7 +34,7 @@ function AccountDashboard(props) {
             <div class='card'>
               <div class='card-body'>
                 <h5 class='card-title'>Account Holder:</h5>
-                <p class='card-text fw-bold fs-1 text-end'>
+                <p class='card-text fw-bold fs-1 text-start'>
                   {props.account.accountHolder.firstName}{" "}
                   {props.account.accountHolder.middleName}{" "}
                   {props.account.accountHolder.lastName}
@@ -46,7 +46,7 @@ function AccountDashboard(props) {
             <div class='card'>
               <div class='card-body'>
                 <h5 class='card-title'>Balance:</h5>
-                <p class='card-text fw-bold fs-1 text-end'>
+                <p class='card-text fw-bold fs-1 text-start'>
                   {props.account.balanceAmount}
                 </p>
               </div>
@@ -54,7 +54,7 @@ function AccountDashboard(props) {
           </div>
         </div>
 
-        <div className='row h-75'>
+        <div className='row h-25'>
           <div className='col'>
             <Link to={manageAccountLink}>
               <button className='btn btn-primary w-100 h-50'>
@@ -96,7 +96,7 @@ function AccountDashboard(props) {
           </div>
         </div>
 
-        <div className='row w-100 h-50'>
+        <div className='row w-100 h-25'>
           <div className='col text-center'>
             <button
               className='btn btn-success w-50 h-50'

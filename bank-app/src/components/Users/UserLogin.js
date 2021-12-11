@@ -92,9 +92,9 @@ function UserLogin() {
           <div className='row text-center mb-3'>
             <div className='col'>
               <img
-                src={process.env.PUBLIC_URL + "../BPO-sm.png"}
+                src={process.env.PUBLIC_URL + "../BPO.svg"}
                 alt='logo'
-                className='w-50'
+                className='w-75'
               />
             </div>
           </div>

@@ -6,6 +6,7 @@ import * as userSvc from "../../services/userService";
 import { getLoggedInUser } from "../../repositories/userRepository";
 import { USER_TYPES } from "../constants";
 
+
 function Header() {
   const [loggedInUser, setLoggedInUser] = useState(getLoggedInUser());
   const navigate = useNavigate();
@@ -81,7 +82,7 @@ function Header() {
           <nav className='navbar navbar-expand-lg navbar-light bg-light'>
             <div className='container-fluid'>
               <NavLink className='navbar-brand' to={location}>
-                <img src='../BPO-sm.png' alt='logo' className='w-50' />
+                <img src="public/BPO-sm.png" alt='logo here' className='w-50' />
               </NavLink>
               <button
                 className='navbar-toggler'

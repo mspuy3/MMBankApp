@@ -7,9 +7,9 @@ function AdminDashboardPage() {
   return (
   <div className="" style={{}}>
 
-    <h1 className="text-center text-primary">Welcome to BPO!</h1>
+    <h1 className="text-center text-primary mb-3">Welcome to BPO!</h1>
     
-    {/* <Overview /> */}
+    <Overview />
     <TransactionsListAll2 />
     
   </div>

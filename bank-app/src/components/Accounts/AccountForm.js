@@ -16,6 +16,7 @@ function AccountForm(props) {
             value={props.account.accountNumber || ""}
             onChange={props.handleChange}
             error={props.errors.accountNumber}
+            placeholder='8-digit'
           />
         </div>
       </div>
