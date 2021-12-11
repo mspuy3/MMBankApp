@@ -91,7 +91,11 @@ function UserLogin() {
         <div className='col'>
           <div className='row text-center mb-3'>
             <div className='col'>
-              <h1>Login</h1>
+              <img
+                src={process.env.PUBLIC_URL + "../BPO-sm.png"}
+                alt='logo'
+                className='w-50'
+              />
             </div>
           </div>
           <div className='row'>
