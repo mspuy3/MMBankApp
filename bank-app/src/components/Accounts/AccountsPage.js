@@ -5,7 +5,7 @@ import AccountsTable from "./AccountsTable";
 function AccountsPage() {
   return (
    <div>
-      <h1 className="text-center">List of All Accounts</h1>
+      <h1 className="text-center text-primary">List of All Accounts</h1>
       <AccountsTable />
       
    </div>
