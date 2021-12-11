@@ -56,9 +56,26 @@ function AccountModalContent(props) {
 
   return (
     <>
-      <button onClick={props.modalHandlers.close}>Close Modal</button>
-      <h1>{props.action}</h1>
-      {renderAction()}
+      <div className='row'>
+        <div className='col'>
+          <button
+            onClick={props.modalHandlers.close}
+            className='btn btn-danger ml-auto'
+          >
+            X
+          </button>
+        </div>
+      </div>
+
+      {/* <div className='row'>
+        <div className='col'>
+          <h1>{props.action}</h1>
+        </div>
+      </div> */}
+
+      <div className='row abs-center'>
+        <div className='col'>{renderAction()}</div>
+      </div>
     </>
   );
 }
