@@ -13,7 +13,7 @@ function UserListPage() {
 
   return (
     <div>
-      <h1 className="text-center">List of All Users</h1>
+      <h1 className="text-center text-primary">List of All Users</h1>
       <UserList users={users} />
     </div>
   );

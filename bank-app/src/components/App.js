@@ -14,7 +14,7 @@ import UserListPage from "./Users/UserListPage";
 
 function App() {
   return (
-    <div>
+    <div className="">
       <Routes>
         <Route path='/' exact element={<Layout />}>
           <Route index element={<UserLogin />} />
