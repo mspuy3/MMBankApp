@@ -27,7 +27,7 @@ function Header() {
         return (
           <nav className='navbar navbar-expand-lg navbar-light bg-light'>
             <div className='container-fluid'>
-              <NavLink className='navbar-brand' to='/'>
+              <NavLink className='navbar-brand' to='/admin/admin-dashboard'>
                 <img
                   src={process.env.PUBLIC_URL + "../BPO-sm.png"}
                   alt='logo'
@@ -48,7 +48,7 @@ function Header() {
               <div className='collapse navbar-collapse  d-flex' id='navbarNav'>
                 <ul className='navbar-nav me-auto mb-2 mb-lg-0'>
                   <li className='nav-item'>
-                    <NavLink className='nav-link' to='/'>
+                    <NavLink className='nav-link' to='/admin/admin-dashboard'>
                       Home
                     </NavLink>
                   </li>
@@ -80,7 +80,7 @@ function Header() {
         return (
           <nav className='navbar navbar-expand-lg navbar-light bg-light'>
             <div className='container-fluid'>
-              <NavLink className='navbar-brand' to='/'>
+              <NavLink className='navbar-brand' to={location}>
                 <img src='../BPO-sm.png' alt='logo' className='w-50' />
               </NavLink>
               <button
